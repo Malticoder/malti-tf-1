@@ -25,7 +25,7 @@ jobs:
       - name: Step to Checkout the code 
         uses: actions/checkout@v4
       - name: Perform terraform Init 
-        run: terraform init -backend-config="bucket=malti-terraform-s3-bucket"-backend-config="key=statefile/${{ github.ref_name }}/terraform.tfstate" -backend-config="region=eu-central-1"
+        run: terraform init -backend-config="bucket=malti-terraform-s3-bucket" -backend-config="key=statefile/${{ github.ref_name }}/terraform.tfstate" -backend-config="region=eu-central-1"
       - name: Perform terraform plan
         run: terraform plan -var "branch_name=${{ github.ref_name }}" 
       - name: Perform terraform apply
@@ -47,7 +47,7 @@ jobs:
       - name: Step to Checkout the code 
         uses: actions/checkout@v4
       - name: Perform terraform Init
-        run: terraform init -backend-config="bucket=malti-terraform-s3-bucket"-backend-config="key=statefile/${{ github.ref_name }}/terraform.tfstate" -backend-config="region=eu-central-1"
+        run: terraform init -backend-config="bucket=malti-terraform-s3-bucket" -backend-config="key=statefile/${{ github.ref_name }}/terraform.tfstate" -backend-config="region=eu-central-1"
       - name: Perform terraform destroy
         run: terraform destroy -var "branch_name=${{ github.ref_name }}" --auto-approve 
     if: github.event_name == 'delete'
