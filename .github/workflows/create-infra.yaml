@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Prepare HTML
         run : |
-          sed -i "s/PLACEHOLDER_USER/${{ github.GITHUB_USER }}-${{ github.actor }}/g" ../project-code/*html
+          sed -i "s/PLACEHOLDER_USER/${{ github.actor }}/g" ../project-code/*html
           sed -i "s/PLACEHOLDER_BRANCH/${{ github.ref_name }}/g" ../project-code/*html
       - name: Setup ssh
         run: echo "$SSH_KEY" > id_rsa

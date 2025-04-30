@@ -23,6 +23,8 @@ jobs:
             terraform_version: "1.5.0"
       - name: Step to Checkout the code 
         uses: actions/checkout@v4
+      - name: Setup ssh
+        run: echo "$SSH_KEY" > id_rsa
       - name: Perform terraform Init
         run: terraform init -backend-config="bucket=terraform-bucket-for-s3-backend" -backend-config="key=statefile/${{ github.ref_name }}/terraform.tfstate" -backend-config="region=ap-southeast-1"
       - name: Perform terraform destroy
