@@ -23,6 +23,10 @@ jobs:
             terraform_version: "1.5.0"
       - name: Step to Checkout the code 
         uses: actions/checkout@v4
+      - name: Prepare HTML
+        run : |
+          sed -i "s/PLACEHOLDER_USER/${{ github.GITHUB_USER }}-${{ github.actor }}/g" ../project-code/%html%
+          sed -i "s/PLACEHOLDER_BRANCH/${{ github.ref_name }}/g" ../project-code/%html%
       - name: Setup ssh
         run: echo "$SSH_KEY" > id_rsa
       - name: Perform terraform Init 
@@ -31,7 +35,6 @@ jobs:
         run: terraform plan -var "branch_name=${{ github.ref_name }}" 
       - name: Perform terraform apply
         run: terraform apply -var "branch_name=${{ github.ref_name }}" --auto-approve
-    #if: github.event_name == 'create'
 
 
 

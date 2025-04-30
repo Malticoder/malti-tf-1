@@ -29,6 +29,7 @@ connection {
   }
   }
 
+
 resource "aws_security_group" "app_sg" {
   name        = "security-group-${var.branch_name}"
   description = "Allow SSH and HTTP"
@@ -58,16 +59,14 @@ resource "aws_security_group" "app_sg" {
 }
 
 
-output "Publi_Ip_Of_Ec2" {
-  value = aws_instance.web.public_ip
-  
-}
+#output "Publi_Ip_Of_Ec2" {
+#  value = aws_instance.web.public_ip 
+#}
 
-output "EC2_Arn" {
-  value = aws_instance.web.arn
-  
-}
+#output "EC2_Arn" {
+#  value = aws_instance.web.arn  
+#}
 
 output "_____what_is_next_step_____" {
-  value = "Please wait for 4-5 minutes while we get the website ready."
+  value = "Please wait for 4-5 minutes while we get the website ready.\n\nYou can open the website at http://${aws_instance.web.public_ip}"
 }
