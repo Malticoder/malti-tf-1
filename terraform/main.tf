@@ -7,7 +7,7 @@ data "template_file" "userdata" {
 
 
 resource "aws_instance" "web" { 
-  ami = "ami-0d8d11821a1c1678b"
+  ami = "ami-05ab12222a9f39021"
   instance_type = "t2.micro"
   security_groups = [ aws_security_group.app_sg.name ]
   user_data_replace_on_change = true
