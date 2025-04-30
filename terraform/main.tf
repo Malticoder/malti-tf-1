@@ -68,5 +68,5 @@ resource "aws_security_group" "app_sg" {
 #}
 
 output "_____what_is_next_step_____" {
-  value = "Please wait for 4-5 minutes while we get the website ready.\n\nYou can open the website at http://${aws_instance.web.public_ip}"
+  value = "Please wait for 4-5 minutes while we get the website ready.\n\n\n\nYou can open the website at http://${aws_instance.web.public_ip}\n\n\n\n"
 }
