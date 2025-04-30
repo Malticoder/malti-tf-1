@@ -11,13 +11,23 @@ resource "aws_instance" "web" {
   instance_type = "t2.micro"
   security_groups = [ aws_security_group.app_sg.name ]
   user_data_replace_on_change = true
+  key_name = "ssh-key-terraform"
   #user_data = file("./userdata.sh")
   user_data = "${base64encode(data.template_file.userdata.rendered)}"
   tags = {
   	Name = "web-server-${var.branch_name}"
   }
-}
-
+connection {
+    type        = "ssh"
+    user        = "ec2-user"
+    private_key = file("./id_rsa")
+    host        = self.public_ip
+  }
+  provisioner "file" {
+    source = "../project-code"
+    destination = "/home/ec2-user"
+  }
+  }
 
 resource "aws_security_group" "app_sg" {
   name        = "security-group-${var.branch_name}"
