@@ -1,0 +1,32 @@
+name: Delete-Infra 
+on:
+  workflow_dispatch:
+
+env: 
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  SSH_KEY: ${{ secrets.ssh-key-terraform }}
+  #AWS_REGION: ${{ secrets.AWS_REGION }}
+
+jobs:
+  Delete-Infrastructure:
+    name: Destroy Infrastructure
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./terraform
+    steps:
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+            terraform_version: "1.5.0"
+      - name: Step to Checkout the code 
+        uses: actions/checkout@v4
+      - name: Perform terraform Init
+        run: terraform init -backend-config="bucket=malti-terraform-s3-bucket" -backend-config="key=statefile/${{ github.ref_name }}/terraform.tfstate" -backend-config="region=eu-central-1"
+      - name: Perform terraform destroy
+        run: terraform destroy -var "branch_name=${{ github.ref_name }}" --auto-approve 
+    #if: github.event_name == 'delete'
+
+
